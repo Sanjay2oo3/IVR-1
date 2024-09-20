@@ -16,15 +16,16 @@ export const verticalLayoutClasses = {
   content: 'ts-vertical-layout-content',
   contentCompact: 'ts-vertical-layout-content-compact',
   contentWide: 'ts-vertical-layout-content-wide',
-  footer: 'ts-vertical-layout-footer',
-  footerStatic: 'ts-vertical-layout-footer-static',
-  footerFixed: 'ts-vertical-layout-footer-fixed',
-  footerDetached: 'ts-vertical-layout-footer-detached',
-  footerAttached: 'ts-vertical-layout-footer-attached',
-  footerContentWrapper: 'ts-vertical-layout-footer-content-wrapper',
-  footerContent: 'ts-vertical-layout-footer-content',
-  footerContentCompact: 'ts-vertical-layout-footer-content-compact',
-  footerContentWide: 'ts-vertical-layout-footer-content-wide'
+  
+  // footer: 'ts-vertical-layout-footer',
+  // footerStatic: 'ts-vertical-layout-footer-static',
+  // footerFixed: 'ts-vertical-layout-footer-fixed',
+  // footerDetached: 'ts-vertical-layout-footer-detached',
+  // footerAttached: 'ts-vertical-layout-footer-attached',
+  // footerContentWrapper: 'ts-vertical-layout-footer-content-wrapper',
+  // footerContent: 'ts-vertical-layout-footer-content',
+  // footerContentCompact: 'ts-vertical-layout-footer-content-compact',
+  // footerContentWide: 'ts-vertical-layout-footer-content-wide'
 }
 
 // Classes for horizontal layout

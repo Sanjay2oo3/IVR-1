@@ -1,8 +1,12 @@
 'use client'
 import React, { useState, useCallback } from 'react'
-import { Background, ReactFlow, Controls, applyEdgeChanges, applyNodeChanges, addEdge } from '@xyflow/react'
+
+import { Background, ReactFlow, Controls, applyEdgeChanges, applyNodeChanges, addEdge, MiniMap } from '@xyflow/react'
+
 import '@xyflow/react/dist/style.css'
+
 import StartNode from '../CustomNodes/StartNode'
+
 const initialEdges: any = []
 
 const initialNodes = [
@@ -23,7 +27,7 @@ export default function IvrFlow() {
   const onConnect = useCallback((params: any) => setEdges((eds: any) => addEdge(params, eds)), [])
 
   return (
-    <div style={{ height: '100%' }}>
+      <div style={{ height: '100%' } } className='m-10 '>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -32,6 +36,7 @@ export default function IvrFlow() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
       >
+        <MiniMap/>
         <Background />
         <Controls />
       </ReactFlow>
