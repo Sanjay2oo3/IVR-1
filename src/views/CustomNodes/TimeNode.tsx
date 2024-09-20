@@ -14,7 +14,7 @@ export default function TimeNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div>
-        <img src='/images/custom/time_condition.png' alt='Menu' style={{ width: '80px', height: '80px' }} />
+        <img src='/images/custom/time_condition.png' alt='Time' style={{ width: '80px', height: '80px' }} />
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}

@@ -14,7 +14,7 @@ export default function MenuNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div>
-        <img src="/nodeimages/menu.png" alt="Menu" style={{ width: '80px', height: '80px' }} />
+        <img src="/images/custom/get_input.png" alt="Menu" style={{ width: '80px', height: '80px' }} />
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}

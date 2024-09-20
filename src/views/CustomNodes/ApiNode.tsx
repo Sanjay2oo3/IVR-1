@@ -14,7 +14,7 @@ export default function ApiNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div>
-        <img src="/images/custom/api_configuration.png" alt="Menu" style={{ width: '80px', height: '80px' }} />
+        <img src="/images/custom/api_configuration.png" alt="API" style={{ width: '80px', height: '80px' }} />
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}

@@ -20,6 +20,11 @@ import MenuNode from '../CustomNodes/MenuNode';
 import TimeNode from '../CustomNodes/TimeNode';
 import HangupNode from '../CustomNodes/HangupNode';
 import ApiNode from '../CustomNodes/ApiNode';
+import IvrNode from '../CustomNodes/IvrNode';
+import PlayMessageNode from '../CustomNodes/PlayMessageNode';
+import QueueNode from '../CustomNodes/QueueNode';
+import UserFeedbackNode from '../CustomNodes/UserFeedbackNode';
+import UserInputNode from '../CustomNodes/UserInputNode';
 
 // Initial nodes setup (can have an empty array if you don't want the default node)
 const initialNodes = [
@@ -32,7 +37,7 @@ const initialNodes = [
 ];
 
 // Custom node types
-const nodeTypes = { StartNode: StartNode,MenuNode:MenuNode,TimeNode:TimeNode,HangupNode:HangupNode,ApiNode:ApiNode };
+const nodeTypes = { StartNode: StartNode,MenuNode:MenuNode,TimeNode:TimeNode,HangupNode:HangupNode,ApiNode:ApiNode, IvrNode:IvrNode, PlayMessageNode:PlayMessageNode, QueueNode:QueueNode, UserFeedbackNode:UserFeedbackNode, UserInputNode:UserInputNode};
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
