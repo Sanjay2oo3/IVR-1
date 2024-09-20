@@ -10,7 +10,7 @@ const handleStyle = {
   border: '2px solid black',
 };
 
-export default function MenuNode({ data }: any) {
+export default function UserInputNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div>
@@ -19,10 +19,9 @@ export default function MenuNode({ data }: any) {
 
       {/* Add connection points (Handles) for the Menu node */}
       <Handle type="target" position={Position.Left} id="error" style={{ ...handleStyle, backgroundColor: 'red' }} />
-      <Handle type="target" position={Position.Bottom} id="timeout" style={{ ...handleStyle, backgroundColor: 'pink', left: '40%' }} />
-      <Handle type="source" position={Position.Bottom} id="invalid" style={{ ...handleStyle, backgroundColor: 'blue', left: '70%' }} />
-      <Handle type="source" position={Position.Right} id="visit-limit" style={{ ...handleStyle, backgroundColor: 'green', top: '20%'}} />
-      <Handle type="source" position={Position.Right} id="start" style={{ ...handleStyle, backgroundColor: 'yellow' }} />
+      <Handle type="target" position={Position.Bottom} id="timeout" style={{ ...handleStyle, backgroundColor: 'pink' }} />
+      <Handle type="source" position={Position.Right} id="invalid" style={{ ...handleStyle, backgroundColor: 'blue', top: '20%' }} />
+      <Handle type="source" position={Position.Right} id="visit-limit" style={{ ...handleStyle, backgroundColor: 'green'}} />
     </div>
   );
 }
