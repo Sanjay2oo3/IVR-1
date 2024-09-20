@@ -1,3 +1,5 @@
+import IvrFlow from '@/views/ivr/IvrFlow'
+
 export default function Page() {
-  return <h1>Home page!</h1>
+  return <IvrFlow />
 }
