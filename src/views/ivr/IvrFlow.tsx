@@ -16,6 +16,10 @@ import { DnDProvider, useDnD } from './DnDContext';
 import StartNode from '../CustomNodes/StartNode';
 
 import './index.css';
+import MenuNode from '../CustomNodes/MenuNode';
+import TimeNode from '../CustomNodes/TimeNode';
+import HangupNode from '../CustomNodes/HangupNode';
+import ApiNode from '../CustomNodes/ApiNode';
 
 // Initial nodes setup (can have an empty array if you don't want the default node)
 const initialNodes = [
@@ -28,7 +32,7 @@ const initialNodes = [
 ];
 
 // Custom node types
-const nodeTypes = { StartNode: StartNode };
+const nodeTypes = { StartNode: StartNode,MenuNode:MenuNode,TimeNode:TimeNode,HangupNode:HangupNode,ApiNode:ApiNode };
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
