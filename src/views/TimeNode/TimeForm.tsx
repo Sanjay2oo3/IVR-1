@@ -19,7 +19,6 @@ export default function TimeForm() {
   // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Validation for the name input
     if (name.length < 1 || name.length > 100) {
       setError(true)
     } else {
@@ -38,16 +37,9 @@ export default function TimeForm() {
 
   return (
     <div>
-      {/* Button to open the drawer */}
-      <Button variant='contained' color='primary' onClick={() => toggleDrawer(true)}>
-        Time Form
-      </Button>
-
-      {/* Custom Drawer Component */}
-      <CustomDrawer open={open} onClose={() => toggleDrawer(false)} title='Properties'>
+      <CustomDrawer open={true} onClose={() => toggleDrawer(false)} title='Properties'>
         <form onSubmit={handleSubmit}>
           <Divider sx={{ mb: 3 }} />
-          {/* Ivr Menu Name Input */}
           <FormControl fullWidth variant='outlined' sx={{ mb: 2 }} error={error}>
             <FormLabel>Name</FormLabel>
             <TextField
@@ -62,7 +54,6 @@ export default function TimeForm() {
             {error && <span style={{ color: 'red' }}>Name must be between 1 and 100 characters.</span>}
           </FormControl>
 
-          {/* Submit Button */}
           <Button
             type='submit'
             variant='contained'
@@ -77,19 +68,18 @@ export default function TimeForm() {
             Submit
           </Button>
         </form>
-      </CustomDrawer>
 
-      {/* Snackbar for success message */}
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Positioning at the top right
-      >
-        <Alert onClose={handleSnackClose} severity='success' sx={{ width: '100%' }}>
-          Form submitted successfully!
-        </Alert>
-      </Snackbar>
+        <Snackbar
+          open={snackOpen}
+          autoHideDuration={3000}
+          onClose={handleSnackClose}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          <Alert onClose={handleSnackClose} severity='success' sx={{ width: '100%' }}>
+            Form submitted successfully!
+          </Alert>
+        </Snackbar>
+      </CustomDrawer>
     </div>
   )
 }

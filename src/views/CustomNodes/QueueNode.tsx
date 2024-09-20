@@ -1,7 +1,9 @@
 // components/QueueNode.tsx
 'use client'
 
+import { useState } from 'react'
 import { Handle, Position } from '@xyflow/react'
+import QueueForm from '../QueNode.tsx/QueueForm'
 
 const handleStyle = {
   width: 12,
@@ -12,6 +14,12 @@ const handleStyle = {
 }
 
 export default function QueueNode({ data }: any) {
+  const [formOpen, setFormOpen] = useState(false)
+
+  const toggleForm = () => {
+    setFormOpen(!formOpen)
+  }
+
   return (
     <div
       style={{
@@ -20,11 +28,13 @@ export default function QueueNode({ data }: any) {
         height: '100px',
         padding: '10px',
         border: '1px solid #ccc',
-        borderRadius: '8px'
+        borderRadius: '8px',
+        cursor: 'pointer' // Change cursor to pointer on hover
       }}
+      onClick={toggleForm} // Toggle form open/close on click
     >
       <div>
-        <img src='/nodeimages/queue.png' alt='Queue' style={{ width: '80px', height: '80px' }} />
+        <img src='/images/custom/Queue.png' alt='Queue' style={{ width: '80px', height: '80px' }} />
       </div>
 
       {/* Connection points */}
@@ -35,6 +45,9 @@ export default function QueueNode({ data }: any) {
         style={{ ...handleStyle, backgroundColor: 'lightblue' }}
       />
       <Handle type='source' position={Position.Right} id='queueRight' style={handleStyle} />
+
+      {/* Render QueueForm inside QueueNode when formOpen is true */}
+      {formOpen && <QueueForm onOpen={toggleForm} />}
     </div>
   )
 }

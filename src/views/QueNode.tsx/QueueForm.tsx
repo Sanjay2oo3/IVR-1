@@ -5,26 +5,19 @@ import { useState } from 'react'
 import { Button, FormControl, FormLabel, TextField, Select, MenuItem, Divider, Snackbar, Alert } from '@mui/material'
 import CustomDrawer from '../CustomDrawer'
 
-export default function QueueForm() {
-  const [open, setOpen] = useState(false)
+export default function QueueForm({ onOpen }: { onOpen: () => void }) {
   const [queueName, setQueueName] = useState('')
   const [selectedQueue, setSelectedQueue] = useState('')
   const [error, setError] = useState(false)
   const [snackOpen, setSnackOpen] = useState(false)
 
-  // Toggle drawer open/close state
-  const toggleDrawer = (isOpen: boolean) => {
-    setOpen(isOpen)
-  }
-
-  // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (queueName.length < 1 || queueName.length > 100) {
       setError(true)
     } else {
       console.log('Queue Form Submitted:', queueName, selectedQueue)
-      toggleDrawer(false)
+      onOpen() // Close the form and reset
       setSnackOpen(true)
       setQueueName('')
       setSelectedQueue('')
@@ -38,11 +31,7 @@ export default function QueueForm() {
 
   return (
     <div>
-      <Button variant='contained' color='primary' onClick={() => toggleDrawer(true)}>
-        Queue
-      </Button>
-
-      <CustomDrawer open={open} onClose={() => toggleDrawer(false)} title='Queue Properties'>
+      <CustomDrawer open={true} onClose={onOpen} title='Queue Properties'>
         <form onSubmit={handleSubmit}>
           <Divider sx={{ mb: 3 }} />
 
@@ -88,19 +77,19 @@ export default function QueueForm() {
             Submit
           </Button>
         </form>
-      </CustomDrawer>
 
-      {/* Snackbar for success message */}
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert onClose={handleSnackClose} severity='success' sx={{ width: '100%' }}>
-          Queue form submitted successfully!
-        </Alert>
-      </Snackbar>
+        {/* Snackbar for success message */}
+        <Snackbar
+          open={snackOpen}
+          autoHideDuration={3000}
+          onClose={handleSnackClose}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          <Alert onClose={handleSnackClose} severity='success' sx={{ width: '100%' }}>
+            Queue form submitted successfully!
+          </Alert>
+        </Snackbar>
+      </CustomDrawer>
     </div>
   )
 }
