@@ -107,15 +107,15 @@ const DnDFlow = () => {
                 x: event.clientX,
                 y: event.clientY,
             });
-
+            let id = getId();
             const newNode = { // Define newNode as Node type
-                id: getId(),
+                id: id,
                 type,
                 position,
-                data: { label: `${type} node` },
+                data: { label: `${type} node`, id: id },
             };
-
             setNodes((nds) => nds.concat(newNode));
+            dispatch({ type: "updateNodeType", payload: { id: newNode.id, type: newNode.type } });
         },
         [screenToFlowPosition, type],
     );

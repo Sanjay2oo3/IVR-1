@@ -20,9 +20,10 @@ export default function MenuNode({ data }: any) {
   const handleOpenDrawer = () => {
     setOpenDrawer(true)
   }
-
+  console.log("Menu Node", data);
   // Function to delete the node
   const handleDeleteNode = () => {
+    console.log("deleting node");
     reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }); // Deletes node by its ID
   }
 
