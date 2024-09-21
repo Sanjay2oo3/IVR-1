@@ -84,7 +84,7 @@ const DnDFlow = () => {
         dispatch({
             type: "updateNodeRelation", payload: {
                 source: params.source,
-                destination: params.destination
+                destination: params.target
             }
         })
     }, [])
