@@ -2,6 +2,7 @@
 
 import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { useState } from 'react'
+import UserInputForm from '../UserInput/UserInputForm'
 
 const handleStyle = {
   width: 12,
@@ -12,13 +13,17 @@ const handleStyle = {
 }
 
 export default function ApiNode({ data }: any) {
-  const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
-  const reactFlowInstance = useReactFlow() // Access the React Flow instance
+ const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
+ const reactFlowInstance = useReactFlow() // Access the React Flow instance
 
-  // Function to delete the node
-  const handleDeleteNode = () => {
-    reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }) // Deletes node by its ID
-  }
+ // Function to delete the node
+ const handleDeleteNode = () => {
+   reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }) // Deletes node by its ID
+ }
+
+ const handleOpenDrawer = () => {
+   setOpenDrawer(true)
+ }
   return (
     <div
       style={{
@@ -48,8 +53,8 @@ export default function ApiNode({ data }: any) {
       >
         X
       </div>
-      <div>
-        <img src='/images/custom/user_input.png' alt='API' style={{ width: '80px', height: '80px' }} />
+      <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
+        <img src='/images/custom/user_input.png' alt='Time' style={{ width: '80px', height: '80px' }} />
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}
@@ -80,6 +85,8 @@ export default function ApiNode({ data }: any) {
           backgroundColor: 'green' // Adjust for centering
         }}
       />
+      {/* Render TimeForm inside TimeNode when formOpen is true */}
+      <UserInputForm open={openDrawer} onClose={() => setOpenDrawer(false)} nodeId={data.id} />
     </div>
   )
 }
