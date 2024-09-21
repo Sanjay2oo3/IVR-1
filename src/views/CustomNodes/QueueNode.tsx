@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { Handle, Position } from '@xyflow/react'
-import QueueForm from '../QueNode.tsx/QueueForm'
+import QueueForm from '../QueueNode.tsx/QueueForm'
 
 const handleStyle = {
   width: 12,
@@ -27,8 +27,6 @@ export default function QueueNode({ data }: any) {
         width: '100px',
         height: '100px',
         padding: '10px',
-        border: '1px solid #ccc',
-        borderRadius: '8px',
         cursor: 'pointer' // Change cursor to pointer on hover
       }}
       onClick={toggleForm} // Toggle form open/close on click

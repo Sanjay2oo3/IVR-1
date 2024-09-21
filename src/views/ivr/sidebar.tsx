@@ -30,7 +30,7 @@ export default function Sidebar() {
 
   const { IvrData } = useIvrContext();
   console.log("ivrdata:------",IvrData);
-    
+
 
   return (
     <Box
@@ -225,7 +225,7 @@ export default function Sidebar() {
               draggable
               onDragStart={(event) => onDragStart(event, 'CaseWhenNode')} // Set UserInputNode type for dragging
             >
-              <img src="/images/custom/case_when.png" alt="User Input" className="w-12 h-12" />
+              <img src="/images/custom/case_when.png" alt="Case When" className="w-12 h-12" />
             </Paper>
           </Tooltip>
         </Box>
@@ -236,7 +236,7 @@ export default function Sidebar() {
               draggable
               onDragStart={(event) => onDragStart(event, 'TtsNode')} // Set UserInputNode type for dragging
             >
-              <img src="/images/custom/tts.png" alt="User Input" className="w-12 h-12" />
+              <img src="/images/custom/tts.png" alt="TTS" className="w-12 h-12" />
             </Paper>
           </Tooltip>
         </Box>
@@ -247,7 +247,7 @@ export default function Sidebar() {
               draggable
               onDragStart={(event) => onDragStart(event, 'LangaugeNode')} // Set UserInputNode type for dragging
             >
-              <img src="/images/custom/language_menu.png" alt="User Input" className="w-12 h-12" />
+              <img src="/images/custom/language_menu.png" alt="Language Node" className="w-12 h-12" />
             </Paper>
           </Tooltip>
         </Box>
@@ -262,6 +262,29 @@ export default function Sidebar() {
             </Paper>
           </Tooltip>
         </Box>
+        <Box className="flex flex-col items-center">
+          <Tooltip title="Session Variable">
+            <Paper
+              className="cursor-grab rounded-lg shadow-md hover:scale-110 transition-transform duration-200 flex items-center justify-center"
+              draggable
+              onDragStart={(event) => onDragStart(event, 'SessionVariableNode')} // Set UserInputNode type for dragging
+            >
+              <img src="/images/custom/session_variable.png" alt="Session Variable" className="w-12 h-12" />
+            </Paper>
+          </Tooltip>
+        </Box>
+        <Box className="flex flex-col items-center">
+          <Tooltip title="Lua">
+            <Paper
+              className="cursor-grab rounded-lg shadow-md hover:scale-110 transition-transform duration-200 flex items-center justify-center"
+              draggable
+              onDragStart={(event) => onDragStart(event, 'LuaNode')} // Set UserInputNode type for dragging
+            >
+              <img src="/images/custom/lua_file.png" alt="Lua" className="w-12 h-12" />
+            </Paper>
+          </Tooltip>
+        </Box>
+
       </Box>
     </Box>
   );

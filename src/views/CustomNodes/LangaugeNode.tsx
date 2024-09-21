@@ -22,7 +22,7 @@ export default function LangaugeNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
-        <img src='/nodeimages/menu.png' alt='Menu' style={{ width: '80px', height: '80px' }} />
+        <img src='/images/custom/language_menu.png' alt='Language Node' style={{ width: '80px', height: '80px' }} />
         {/* Click here to open form */}
       </div>
 

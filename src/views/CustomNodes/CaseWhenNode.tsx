@@ -22,13 +22,13 @@ export default function CaseWhenNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
-        <img src='/nodeimages/menu.png' alt='Menu' style={{ width: '80px', height: '80px' }} />
+        <img src='/images/custom/case_when.png' alt='Case When' style={{ width: '80px', height: '80px' }} />
         {/* Click here to open form */}
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}
       <Handle type='source' position={Position.Left} id='error' style={{ ...handleStyle, backgroundColor: 'red' }} />
-      
+
       <Handle
         type='source'
         position={Position.Right}

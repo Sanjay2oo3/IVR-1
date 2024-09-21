@@ -22,20 +22,20 @@ export default function SessionVariableNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
-        <img src='/nodeimages/menu.png' alt='Menu' style={{ width: '80px', height: '80px' }} />
+        <img src='/images/custom/session_variable.png' alt='Session Variable' style={{ width: '80px', height: '80px' }} />
         {/* Click here to open form */}
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}
       <Handle type='source' position={Position.Left} id='error' style={{ ...handleStyle, backgroundColor: 'red' }} />
-      
+
       <Handle
         type='source'
         position={Position.Right}
         id='visit-limit'
         style={{ ...handleStyle, backgroundColor: 'green', top: '20%' }}
       />
-     
+
 
       {/* Render the MenuFormDrawer and pass the open state */}
       {/* <MenuForm open={openDrawer} onClose={() => setOpenDrawer(false)} /> */}

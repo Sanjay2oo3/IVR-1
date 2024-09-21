@@ -29,6 +29,12 @@ import UserFeedbackNode from '../CustomNodes/UserFeedbackNode'
 import UserInputNode from '../CustomNodes/UserInputNode'
 import IvrContext, { useIvrContext } from './IvrContext'
 import { v4 as uuidv4 } from 'uuid';
+import LangaugeNode from '../CustomNodes/LangaugeNode'
+import TtsNode from '../CustomNodes/TtsNode'
+import CaseWhenNode from '../CustomNodes/CaseWhenNode'
+import CallbackNode from '../CustomNodes/CallbackNode'
+import SessionVariableNode from '../CustomNodes/SessionVariableNode'
+import LuaNode from '../CustomNodes/LuaNode'
 
 // Initial nodes setup (can have an empty array if you don't want the default node)
 const initialNodes = [
@@ -51,7 +57,14 @@ const nodeTypes = {
   PlayMessageNode: PlayMessageNode,
   QueueNode: QueueNode,
   UserFeedbackNode: UserFeedbackNode,
-  UserInputNode: UserInputNode
+  UserInputNode: UserInputNode,
+  LangaugeNode: LangaugeNode,
+  TtsNode: TtsNode,
+  CaseWhenNode : CaseWhenNode,
+  CallbackNode: CallbackNode,
+  SessionVariableNode: SessionVariableNode,
+  LuaNode: LuaNode,
+  
 }
 
 let id = 0

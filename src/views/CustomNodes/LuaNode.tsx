@@ -22,7 +22,7 @@ export default function LuaNode({ data }: any) {
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
       <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
-        <img src='/nodeimages/menu.png' alt='Menu' style={{ width: '80px', height: '80px' }} />
+        <img src='/images/custom/lua_file.png' alt='Lua Node' style={{ width: '80px', height: '80px' }} />
         {/* Click here to open form */}
       </div>
 
