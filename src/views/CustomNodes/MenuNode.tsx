@@ -1,6 +1,6 @@
 'use client'
 
-import { Handle, Position } from '@xyflow/react'
+import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { useState } from 'react'
 import MenuForm from '../MenuNode/MenuFrom'
 
@@ -14,17 +14,43 @@ const handleStyle = {
 
 export default function MenuNode({ data }: any) {
   const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
-  console.log("Data",data);
+  const reactFlowInstance = useReactFlow(); // Access the React Flow instance
+
   // Function to toggle drawer open state
   const handleOpenDrawer = () => {
     setOpenDrawer(true)
   }
 
+  // Function to delete the node
+  const handleDeleteNode = () => {
+    reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }); // Deletes node by its ID
+  }
+
   return (
     <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
+      {/* Close (Delete) Button */}
+      <div
+        onClick={handleDeleteNode}
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          cursor: 'pointer',
+          backgroundColor: 'red',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          borderRadius: '50%'
+        }}
+      >
+        X
+      </div>
+
       <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
         <img src='/nodeimages/menu.png' alt='Menu' style={{ width: '80px', height: '80px' }} />
-        {/* Click here to open form */}
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}

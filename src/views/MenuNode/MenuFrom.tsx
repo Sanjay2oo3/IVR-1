@@ -18,7 +18,7 @@ import CustomDrawer from '../CustomDrawer'
 import { useIvrContext } from '../ivr/IvrContext';
 
 // Modify the props to control the drawer from the parent component
-export default function MenuForm({ open, onClose,nodeId }: { open: boolean; onClose: () => void,nodeId:string }) {
+export default function MenuForm({ open, onClose, nodeId }: { open: boolean; onClose: () => void,nodeId:string }) {
   const [snackOpen, setSnackOpen] = useState(false)
   const { dispatch } = useIvrContext()
 
