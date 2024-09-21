@@ -1,33 +1,30 @@
-// components/QueueForm.tsx
+
 'use client'
 
 import { useState } from 'react'
 import { Button, FormControl, FormLabel, TextField, Select, MenuItem, Divider } from '@mui/material'
 import CustomDrawer from '../CustomDrawer'
-import { useIvrContext } from '../ivr/IvrContext'
+import { useIvrContext } from '../ivr/IvrContext';
 
 export default function QueueForm({ open, onClose, nodeId }: { open: boolean; onClose: () => void; nodeId: string }) {
+  const { dispatch } = useIvrContext()
+
   const [formValues, setFormValues] = useState({
     queueName: '',
     selectedQueue: ''
   })
-  const { dispatch } = useIvrContext()
-  
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     dispatch({
       type: 'setIvrData',
       payload: {
-        nodeId: nodeId,
+        nodeId:nodeId,
         formValues
-      }
+      },
     })
-
-    console.log('Form Submitted with values:', formValues, 'for Node ID:', nodeId)
-
-   
 
     // Close the drawer after submission
     onClose()

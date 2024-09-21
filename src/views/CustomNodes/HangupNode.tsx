@@ -2,6 +2,8 @@
 
 import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { useIvrContext } from '../ivr/IvrContext'
+import HangUpForm from '../HangUpNode/HangUpForm'
+import { useState } from 'react'
 
 const handleStyle = {
   width: 12, // Handle size
@@ -13,12 +15,17 @@ const handleStyle = {
 }
 
 export default function HangupNode({ data }: any) {
-  const { IvrData } = useIvrContext()
-  const reactFlowInstance = useReactFlow() // Access the React Flow instance
+  const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
+ const reactFlowInstance = useReactFlow() // Access the React Flow instance
+
 
   // Function to delete the node
   const handleDeleteNode = () => {
     reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }) // Deletes node by its ID
+  }
+
+  const handleOpenDrawer = () => {
+    setOpenDrawer(true)
   }
 
   return (
@@ -50,15 +57,9 @@ export default function HangupNode({ data }: any) {
       >
         X
       </div>
-      {/* Image */}
-      <img
-        src='/images/custom/call_hangup.png'
-        alt='HangUp'
-        style={{
-          width: '80px', // Set width of the image
-          height: '80px' // Set height of the image
-        }}
-      />
+      <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
+        <img src='/images/custom/call_hangup.png' alt='Time' style={{ width: '80px', height: '80px' }} />
+      </div>
 
       {/* Left connection point (target) */}
       <Handle
@@ -88,6 +89,8 @@ export default function HangupNode({ data }: any) {
           backgroundColor: 'green' // Adjust for centering
         }}
       />
+      {/* Render TimeForm inside TimeNode when formOpen is true */}
+      <HangUpForm open={openDrawer} onClose={() => setOpenDrawer(false)} nodeId={data.id} />
     </div>
   )
 }

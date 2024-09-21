@@ -2,6 +2,7 @@
 
 import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { useState } from 'react'
+import UserInputForm from '../UserInputNode/UserInputForm'
 
 const handleStyle = {
   width: 12,
@@ -80,6 +81,9 @@ export default function ApiNode({ data }: any) {
           backgroundColor: 'green' // Adjust for centering
         }}
       />
+      {/* Render TimeForm inside TimeNode when formOpen is true */}
+      <UserInputForm open={openDrawer} onClose={() => setOpenDrawer(false)} nodeId={data.id} />
+
     </div>
   )
 }

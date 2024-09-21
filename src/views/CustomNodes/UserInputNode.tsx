@@ -2,7 +2,7 @@
 
 import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { useState } from 'react'
-import UserInputForm from '../UserInput/UserInputForm'
+import UserInputForm from '../UserInputNode/UserInputForm'
 
 const handleStyle = {
   width: 12,

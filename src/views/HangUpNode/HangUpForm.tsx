@@ -5,14 +5,13 @@ import { Button, FormControl, FormLabel, TextField, Divider, Snackbar, Alert } f
 import CustomDrawer from '../CustomDrawer'
 import { useIvrContext } from '../ivr/IvrContext';
 
-export default function TimeForm({ open, onClose, nodeId }: { open: boolean; onClose: () => void; nodeId: string }) {
+export default function HangUpForm({ open, onClose, nodeId }: { open: boolean; onClose: () => void; nodeId: string }) {
   const { dispatch } = useIvrContext()
 
   const [formValues, setFormValues] = useState({
     name: ''
   })
   const [error, setError] = useState(false)
-  const [snackOpen, setSnackOpen] = useState(false) // Snackbar state
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
