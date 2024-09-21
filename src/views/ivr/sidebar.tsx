@@ -14,22 +14,25 @@ export default function Sidebar() {
   const { dispatch } = useIvrContext();
 
   const handleSave = () => {
-    // Dispatching actions to the context to update global state
-    dispatch({ type: 'IvrName', payload: { IvrName: ivrName } });
-    dispatch({ type: 'IvrUniqueNumber', payload: { IvrUniqueNumber: ivrNumber } });
-    dispatch({ type: 'Language', payload: { Language: language } });
-    dispatch({ type: 'BranchName', payload: { BranchName: branch } });
+    dispatch({
+      type: "updateIvrInfo", payload: {
+        IvrName: ivrName,
+        IvrUniqueNumber: ivrNumber,
+        Language: language,
+        BranchName: branch
+      }
+    });
 
     console.log('Form data saved to context!');
   };
 
-  const onDragStart = (event, nodeType: string) => {
+  const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeType: string) => {
     setType(nodeType); // Set the dragged type
     event.dataTransfer.effectAllowed = 'move';
   };
 
   const { IvrData } = useIvrContext();
-  console.log("ivrdata:------",IvrData);
+  console.log("ivrdata:------", IvrData);
 
   return (
     <Box
