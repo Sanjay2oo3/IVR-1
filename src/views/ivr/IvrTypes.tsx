@@ -32,6 +32,15 @@ export type UpdateNodeType = {
     type: string  // type of node (e.g., "MenuNode", "TimeNode", etc.)
   }
 }
+export type UpdateIvrInfo = {
+  type: "updateIvrInfo",
+  payload: {
+    IvrName: string
+    IvrUniqueNumber: string
+    Language: string
+    BranchName: string
+  }
+}
 
 // Union type for all possible action types
-export type IvrContextAction = SetIvrDataAction | UpdateNodeRelationAction | UpdateNodeType
+export type IvrContextAction = SetIvrDataAction | UpdateNodeRelationAction | UpdateNodeType | UpdateIvrInfo

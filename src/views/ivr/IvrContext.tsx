@@ -1,8 +1,12 @@
-import React, { createContext, useContext, useReducer } from 'react'
+import React, { createContext, Dispatch, useContext, useReducer } from 'react'
 import { IvrMetaDataTypes, IvrContextAction } from './IvrTypes' // Importing types
 
+interface IvrContextType {
+    IvrData: IvrContextType;
+    dispatch: Dispatch<IvrContextAction>;
+}
 // Create the context
-export const Ivrcontent = createContext<any>({})
+export const Ivrcontent = createContext<IvrContextType>({} as IvrContextType)
 
 // Initial state
 const initialMetaData: IvrMetaDataTypes = {
@@ -14,6 +18,7 @@ const initialMetaData: IvrMetaDataTypes = {
     nodeRelationship: {},
     nodeType: {}
 }
+
 
 // Reducer function to handle state changes
 const reducer = (state: IvrMetaDataTypes, action: IvrContextAction): IvrMetaDataTypes => {
@@ -48,6 +53,12 @@ const reducer = (state: IvrMetaDataTypes, action: IvrContextAction): IvrMetaData
             }
 
         }
+        case "updateIvrInfo": {
+            return {
+                ...state,
+                ...action.payload
+            }
+        }
         default:
             return state
     }
@@ -55,7 +66,7 @@ const reducer = (state: IvrMetaDataTypes, action: IvrContextAction): IvrMetaData
 
 // Context provider component
 export default function IvrContext(props: any) {
-    const [IvrData, dispatch] = useReducer<any>(reducer, initialMetaData)
+    const [IvrData, dispatch] = useReducer<(state: IvrMetaDataTypes, action: IvrContextAction) => IvrMetaDataTypes>(reducer, initialMetaData)
     return <Ivrcontent.Provider value={{ IvrData, dispatch }}>{props.children}</Ivrcontent.Provider>
 }
 

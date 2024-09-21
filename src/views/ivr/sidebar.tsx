@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDnD } from './DnDContext';
-import { Box, Paper, Typography, Divider, TextField, MenuItem, Select, FormControl, InputLabel, Tooltip, Button } from '@mui/material';
 import { useIvrContext } from './IvrContext'; // Import the custom hook for the context
+import { Box, Paper, Typography, Divider, TextField, MenuItem, Select, FormControl, InputLabel, Tooltip, Button } from '@mui/material';
 
 export default function Sidebar() {
   const [_, setType] = useDnD();
@@ -14,28 +14,30 @@ export default function Sidebar() {
   const { dispatch } = useIvrContext();
 
   const handleSave = () => {
-    // Dispatching actions to the context to update global state
-    dispatch({ type: 'IvrName', payload: { IvrName: ivrName } });
-    dispatch({ type: 'IvrUniqueNumber', payload: { IvrUniqueNumber: ivrNumber } });
-    dispatch({ type: 'Language', payload: { Language: language } });
-    dispatch({ type: 'BranchName', payload: { BranchName: branch } });
+    dispatch({
+      type: "updateIvrInfo", payload: {
+        IvrName: ivrName,
+        IvrUniqueNumber: ivrNumber,
+        Language: language,
+        BranchName: branch
+      }
+    });
 
     console.log('Form data saved to context!');
   };
 
-  const onDragStart = (event, nodeType: string) => {
+  const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeType: string) => {
     setType(nodeType); // Set the dragged type
     event.dataTransfer.effectAllowed = 'move';
   };
 
   const { IvrData } = useIvrContext();
-  console.log("ivrdata:------",IvrData);
-
+  console.log("ivrdata:------", IvrData);
 
   return (
     <Box
       component="aside"
-      className="w-96 h-screen bg-white flex flex-col p-6 shadow-lg border-r border-gray-300 fixed left-0 top-0"
+      className="h-screen w-64 bg-white flex flex-col p-6 shadow-lg border-r border-gray-300 fixed left-0 top-0"
     >
       {/* Sidebar Header */}
       <Typography variant="h5" className="text-blue-600 mb-4">
@@ -87,9 +89,9 @@ export default function Sidebar() {
             value={branch}
             onChange={(e) => setBranch(e.target.value)}
           >
-            <MenuItem value="branch1">Branch 1</MenuItem>
-            <MenuItem value="branch2">Branch 2</MenuItem>
-            <MenuItem value="branch3">Branch 3</MenuItem>
+            <MenuItem value="1">Branch 1</MenuItem>
+            <MenuItem value="2">Branch 2</MenuItem>
+            <MenuItem value="3">Branch 3</MenuItem>
           </Select>
         </FormControl>
 
@@ -284,7 +286,6 @@ export default function Sidebar() {
             </Paper>
           </Tooltip>
         </Box>
-
       </Box>
     </Box>
   );
