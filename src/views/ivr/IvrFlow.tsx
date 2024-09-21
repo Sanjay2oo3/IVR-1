@@ -1,15 +1,16 @@
 'use client'
 import React, { useRef, useCallback } from 'react'
 import {
-    ReactFlow,
-    ReactFlowProvider,
-    addEdge,
-    useNodesState,
-    useEdgesState,
-    Controls,
-    useReactFlow,
-    MiniMap,
-    Background
+  ReactFlow,
+  ReactFlowProvider,
+  addEdge,
+  useNodesState,
+  useEdgesState,
+  Controls,
+  useReactFlow,
+  MiniMap,
+  Background,
+  Connection
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
@@ -38,32 +39,32 @@ import LuaNode from '../CustomNodes/LuaNode'
 
 // Initial nodes setup (can have an empty array if you don't want the default node)
 const initialNodes = [
-    {
-        id: '1',
-        type: 'StartNode',
-        data: { label: 'Start node' },
-        position: { x: 150, y: 5 }
-    }
+  {
+    id: '1',
+    type: 'StartNode',
+    data: { label: 'Start node' },
+    position: { x: 150, y: 5 }
+  }
 ]
 
 // Custom node types
 const nodeTypes = {
-    StartNode: StartNode,
-    MenuNode: MenuNode,
-    TimeNode: TimeNode,
-    HangupNode: HangupNode,
-    ApiNode: ApiNode,
-    IvrNode: IvrNode,
-    PlayMessageNode: PlayMessageNode,
-    QueueNode: QueueNode,
-    UserFeedbackNode: UserFeedbackNode,
-    UserInputNode: UserInputNode,
-    LangaugeNode: LangaugeNode,
-    TtsNode: TtsNode,
-    CaseWhenNode: CaseWhenNode,
-    CallbackNode: CallbackNode,
-    SessionVariableNode: SessionVariableNode,
-    LuaNode: LuaNode,
+  StartNode: StartNode,
+  MenuNode: MenuNode,
+  TimeNode: TimeNode,
+  HangupNode: HangupNode,
+  ApiNode: ApiNode,
+  IvrNode: IvrNode,
+  PlayMessageNode: PlayMessageNode,
+  QueueNode: QueueNode,
+  UserFeedbackNode: UserFeedbackNode,
+  UserInputNode: UserInputNode,
+  LangaugeNode: LangaugeNode,
+  TtsNode: TtsNode,
+  CaseWhenNode: CaseWhenNode,
+  CallbackNode: CallbackNode,
+  SessionVariableNode: SessionVariableNode,
+  LuaNode: LuaNode,
 
 }
 
@@ -71,87 +72,88 @@ let id = 0
 const getId = () => uuidv4();
 
 const DnDFlow = () => {
-    const reactFlowWrapper = useRef(null)
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-    const [edges, setEdges, onEdgesChange] = useEdgesState([])
-    console.log('edges', edges)
-    const { screenToFlowPosition } = useReactFlow()
-    const [type] = useDnD() // Retrieves the dragged node type
-    const { IvrData, dispatch } = useIvrContext();
-    const onConnect = useCallback(params => {
-        setEdges(eds => addEdge(params, eds))
-        console.log("Edge Connection", params)
-        dispatch({
-            type: "updateNodeRelation", payload: {
-                source: params.source,
-                destination: params.target
-            }
-        })
-    }, [])
+  const reactFlowWrapper = useRef(null)
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+  const [edges, setEdges, onEdgesChange] = useEdgesState([])
+  console.log('edges', edges)
+  const { screenToFlowPosition } = useReactFlow()
+  const [type] = useDnD() // Retrieves the dragged node type
+  const { IvrData, dispatch } = useIvrContext();
+  const onConnect = useCallback((params: Connection) => {
+    setEdges(eds => addEdge(params, eds))
+    console.log("Edge Connection", params)
+    dispatch({
+      type: "updateNodeRelation", payload: {
+        source: params.source,
+        destination: params.target
+      }
+    })
+  }, [])
 
-    const onDragOver = useCallback(event => {
-        event.preventDefault()
-        event.dataTransfer.dropEffect = 'move'
-    }, [])
+  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    event.dataTransfer.dropEffect = 'move'
+  }, [])
 
-    const onDrop = useCallback(
-        event => {
-            event.preventDefault()
+  const onDrop = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
 
-            // Check if the dropped element is valid
-            if (!type) {
-                return
-            }
+      if (!type) {
+        return;
+      }
 
-            // Get drop position and create a new node with the dragged type
-            const position = screenToFlowPosition({
-                x: event.clientX,
-                y: event.clientY
-            })
-            const id = getId();
-            const newNode = {
-                id: id,
-                type, // Use the dragged type (can be 'StartNode')
-                position,
-                data: { label: `${type} node`, id }
-            }
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
 
-            setNodes(nds => nds.concat(newNode))
-            dispatch({ type: "updateNodeType", payload: { id: newNode.id, type: newNode.type } });
-        },
-        [screenToFlowPosition, type]
-    )
+      const newNode = { // Define newNode as Node type
+        id: getId(),
+        type,
+        position,
+        data: { label: `${type} node` },
+      };
 
-    return (
-        <div className='dndflow'>
-            <div className='reactflow-wrapper' ref={reactFlowWrapper}>
-                <ReactFlow
-                    nodes={nodes}
-                    edges={edges}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    onConnect={onConnect}
-                    onDrop={onDrop}
-                    onDragOver={onDragOver}
-                    nodeTypes={nodeTypes} // Custom node types
-                    fitView
-                >
-                    <Controls />
-                    <MiniMap />
-                    <Background color='black' />
-                </ReactFlow>
-            </div>
-            <Sidebar />
-        </div>
-    )
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [screenToFlowPosition, type],
+  );
+
+  return (
+    <div className='dndflow flex h-screen'>
+      <div className='sidebar w-[17.5%] bg-gray-100 border-r border-gray-300'>
+        <Sidebar />
+      </div>
+      <div className='reactflow-wrapper flex-1' ref={reactFlowWrapper}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          nodeTypes={nodeTypes} // Custom node types
+          fitView
+        >
+          <div className='h-full'>
+            <Controls />
+            <MiniMap />
+            <Background color='black' />
+          </div>
+        </ReactFlow>
+      </div>
+    </div>
+  )
 }
 
 export default () => (
-    <IvrContext>
-        <ReactFlowProvider>
-            <DnDProvider>
-                <DnDFlow />
-            </DnDProvider>
-        </ReactFlowProvider>
-    </IvrContext>
+  <IvrContext>
+    <ReactFlowProvider>
+      <DnDProvider>
+        <DnDFlow />
+      </DnDProvider>
+    </ReactFlowProvider>
+  </IvrContext>
 )
