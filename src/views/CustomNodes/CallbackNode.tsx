@@ -2,7 +2,6 @@
 
 import { Handle, Position } from '@xyflow/react'
 import { useState } from 'react'
-import MenuForm from '../MenuNode/MenuFrom'
 
 const handleStyle = {
   width: 12,
@@ -12,9 +11,9 @@ const handleStyle = {
   border: '2px solid black'
 }
 
-export default function MenuNode({ data }: any) {
+export default function CallbackNode({ data }: any) {
   const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
-  console.log("Data",data);
+
   // Function to toggle drawer open state
   const handleOpenDrawer = () => {
     setOpenDrawer(true)
@@ -29,18 +28,7 @@ export default function MenuNode({ data }: any) {
 
       {/* Add connection points (Handles) for the Menu node */}
       <Handle type='source' position={Position.Left} id='error' style={{ ...handleStyle, backgroundColor: 'red' }} />
-      <Handle
-        type='target'
-        position={Position.Bottom}
-        id='timeout'
-        style={{ ...handleStyle, backgroundColor: 'pink', left: '40%' }}
-      />
-      <Handle
-        type='source'
-        position={Position.Bottom}
-        id='invalid'
-        style={{ ...handleStyle, backgroundColor: 'blue', left: '70%' }}
-      />
+      
       <Handle
         type='source'
         position={Position.Right}
@@ -50,12 +38,12 @@ export default function MenuNode({ data }: any) {
       <Handle
         type='source'
         position={Position.Right}
-        id='start'
-        style={{ ...handleStyle, backgroundColor: 'yellow' }}
+        id='error'
+        style={{ ...handleStyle, backgroundColor: 'red' }}
       />
 
       {/* Render the MenuFormDrawer and pass the open state */}
-      <MenuForm open={openDrawer} onClose={() => setOpenDrawer(false)} nodeId={data.id} />
+      {/* <MenuForm open={openDrawer} onClose={() => setOpenDrawer(false)} /> */}
     </div>
   )
 }

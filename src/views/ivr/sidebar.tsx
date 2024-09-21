@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDnD } from './DnDContext';
 import { Box, Paper, Typography, Divider, TextField, MenuItem, Select, FormControl, InputLabel, Tooltip, Button } from '@mui/material';
+import { useIvrContext } from './IvrContext'; // Import the custom hook for the context
 
 export default function Sidebar() {
   const [_, setType] = useDnD();
+  const [ivrName, setIvrName] = useState('');
+  const [ivrNumber, setIvrNumber] = useState('');
+  const [language, setLanguage] = useState('');
+  const [branch, setBranch] = useState('');
+
+  // Accessing context values
+  const { dispatch } = useIvrContext();
+
+  const handleSave = () => {
+    // Dispatching actions to the context to update global state
+    dispatch({ type: 'IvrName', payload: { IvrName: ivrName } });
+    dispatch({ type: 'IvrUniqueNumber', payload: { IvrUniqueNumber: ivrNumber } });
+    dispatch({ type: 'Language', payload: { Language: language } });
+    dispatch({ type: 'BranchName', payload: { BranchName: branch } });
+
+    console.log('Form data saved to context!');
+  };
 
   const onDragStart = (event, nodeType: string) => {
     setType(nodeType); // Set the dragged type
     event.dataTransfer.effectAllowed = 'move';
   };
+
+  const { IvrData } = useIvrContext();
+  console.log("ivrdata:------",IvrData);
+    
 
   return (
     <Box
@@ -22,51 +44,72 @@ export default function Sidebar() {
 
       <Divider className="mb-6" />
 
-      {/* IVR Name Field */}
-      <TextField
-        label="IVR Name"
-        variant="outlined"
-        className="mb-4"
-        fullWidth
-      />
+      <form>
+        {/* IVR Name Field */}
+        <TextField
+          label="IVR Name"
+          variant="outlined"
+          className="mb-4"
+          fullWidth
+          value={ivrName}
+          onChange={(e) => setIvrName(e.target.value)}
+        />
 
-      {/* IVR Unique Number Field */}
-      <TextField
-        label="IVR Unique No."
-        variant="outlined"
-        className="mb-4"
-        fullWidth
-      />
+        {/* IVR Unique Number Field */}
+        <TextField
+          label="IVR Unique No."
+          variant="outlined"
+          className="mb-4"
+          fullWidth
+          value={ivrNumber}
+          onChange={(e) => setIvrNumber(e.target.value)}
+        />
 
-      {/* Language Dropdown */}
-      <FormControl variant="outlined" className="mb-4" fullWidth>
-        <InputLabel>Language</InputLabel>
-        <Select label="Language">
-          <MenuItem value="en">English</MenuItem>
-          <MenuItem value="es">Spanish</MenuItem>
-          <MenuItem value="fr">French</MenuItem>
-        </Select>
-      </FormControl>
+        {/* Language Dropdown */}
+        <FormControl variant="outlined" className="mb-4" fullWidth>
+          <InputLabel>Language</InputLabel>
+          <Select
+            label="Language"
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+          >
+            <MenuItem value="en">English</MenuItem>
+            <MenuItem value="es">Spanish</MenuItem>
+            <MenuItem value="fr">French</MenuItem>
+          </Select>
+        </FormControl>
 
-      {/* Branch Name Dropdown */}
-      <FormControl variant="outlined" className="mb-4" fullWidth>
-        <InputLabel>Branch Name</InputLabel>
-        <Select label="Branch Name">
-          <MenuItem value="branch1">Branch 1</MenuItem>
-          <MenuItem value="branch2">Branch 2</MenuItem>
-          <MenuItem value="branch3">Branch 3</MenuItem>
-        </Select>
-      </FormControl>
+        {/* Branch Name Dropdown */}
+        <FormControl variant="outlined" className="mb-4" fullWidth>
+          <InputLabel>Branch Name</InputLabel>
+          <Select
+            label="Branch Name"
+            value={branch}
+            onChange={(e) => setBranch(e.target.value)}
+          >
+            <MenuItem value="branch1">Branch 1</MenuItem>
+            <MenuItem value="branch2">Branch 2</MenuItem>
+            <MenuItem value="branch3">Branch 3</MenuItem>
+          </Select>
+        </FormControl>
 
-      {/* Save and Exit Buttons */}
-      <Box className="flex justify-between mb-6">
-        <Button variant="contained" color="primary">
-          Save
-        </Button>
-        <Button variant="outlined" color="secondary">
-          Exit
-        </Button>
-      </Box>
+        {/* Save and Exit Buttons */}
+        <Box display="flex" justifyContent="space-between" className="mb-6">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSave}
+          >
+            Save
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+          >
+            Exit
+          </Button>
+        </Box>
+      </form>
 
       <Divider className="mb-6" />
 
@@ -172,6 +215,50 @@ export default function Sidebar() {
               onDragStart={(event) => onDragStart(event, 'UserInputNode')} // Set UserInputNode type for dragging
             >
               <img src="/images/custom/user_input.png" alt="User Input" className="w-12 h-12" />
+            </Paper>
+          </Tooltip>
+        </Box>
+        <Box className="flex flex-col items-center">
+          <Tooltip title="Case When">
+            <Paper
+              className="cursor-grab rounded-lg shadow-md hover:scale-110 transition-transform duration-200 flex items-center justify-center"
+              draggable
+              onDragStart={(event) => onDragStart(event, 'CaseWhenNode')} // Set UserInputNode type for dragging
+            >
+              <img src="/images/custom/case_when.png" alt="User Input" className="w-12 h-12" />
+            </Paper>
+          </Tooltip>
+        </Box>
+        <Box className="flex flex-col items-center">
+          <Tooltip title="TTS">
+            <Paper
+              className="cursor-grab rounded-lg shadow-md hover:scale-110 transition-transform duration-200 flex items-center justify-center"
+              draggable
+              onDragStart={(event) => onDragStart(event, 'TtsNode')} // Set UserInputNode type for dragging
+            >
+              <img src="/images/custom/tts.png" alt="User Input" className="w-12 h-12" />
+            </Paper>
+          </Tooltip>
+        </Box>
+        <Box className="flex flex-col items-center">
+          <Tooltip title="Langauge Menu">
+            <Paper
+              className="cursor-grab rounded-lg shadow-md hover:scale-110 transition-transform duration-200 flex items-center justify-center"
+              draggable
+              onDragStart={(event) => onDragStart(event, 'LangaugeNode')} // Set UserInputNode type for dragging
+            >
+              <img src="/images/custom/language_menu.png" alt="User Input" className="w-12 h-12" />
+            </Paper>
+          </Tooltip>
+        </Box>
+        <Box className="flex flex-col items-center">
+          <Tooltip title="Call Back">
+            <Paper
+              className="cursor-grab rounded-lg shadow-md hover:scale-110 transition-transform duration-200 flex items-center justify-center"
+              draggable
+              onDragStart={(event) => onDragStart(event, 'CallbackNode')} // Set UserInputNode type for dragging
+            >
+              <img src="/images/custom/callback.png" alt="User Input" className="w-12 h-12" />
             </Paper>
           </Tooltip>
         </Box>

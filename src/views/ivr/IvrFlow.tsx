@@ -27,15 +27,16 @@ import PlayMessageNode from '../CustomNodes/PlayMessageNode'
 import QueueNode from '../CustomNodes/QueueNode'
 import UserFeedbackNode from '../CustomNodes/UserFeedbackNode'
 import UserInputNode from '../CustomNodes/UserInputNode'
-import IvrContext from './IvrContext'
+import IvrContext, { useIvrContext } from './IvrContext'
+import { v4 as uuidv4 } from 'uuid';
 
 // Initial nodes setup (can have an empty array if you don't want the default node)
 const initialNodes = [
   {
     id: '1',
     type: 'StartNode',
-    data: { label: 'hello node' },
-    position: { x: 250, y: 5 }
+    data: { label: 'Start node' },
+    position: { x: 150, y: 5 }
   }
 ]
 
@@ -54,7 +55,7 @@ const nodeTypes = {
 }
 
 let id = 0
-const getId = () => `dndnode_${id++}`
+const getId = () => uuidv4();
 
 const DnDFlow = () => {
   const reactFlowWrapper = useRef(null)
@@ -63,8 +64,17 @@ const DnDFlow = () => {
   console.log('edges', edges)
   const { screenToFlowPosition } = useReactFlow()
   const [type] = useDnD() // Retrieves the dragged node type
-
-  const onConnect = useCallback(params => setEdges(eds => addEdge(params, eds)), [])
+  const { IvrData, dispatch } = useIvrContext();
+  const onConnect = useCallback(params => {
+    setEdges(eds => addEdge(params, eds))
+    console.log("Edge Connection",params)
+    dispatch({
+      type: "updateNodeRelation", payload: {
+        source: params.source,
+        destination: params.destination
+      }
+    })
+  }, [])
 
   const onDragOver = useCallback(event => {
     event.preventDefault()
@@ -85,11 +95,12 @@ const DnDFlow = () => {
         x: event.clientX,
         y: event.clientY
       })
+      const id = getId();
       const newNode = {
-        id: getId(),
+        id: id,
         type, // Use the dragged type (can be 'StartNode')
         position,
-        data: { label: `${type} node` }
+        data: { label: `${type} node`, id }
       }
 
       setNodes(nds => nds.concat(newNode))

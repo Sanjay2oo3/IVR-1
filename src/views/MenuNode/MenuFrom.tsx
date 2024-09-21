@@ -14,17 +14,44 @@ import {
   Snackbar,
   Alert
 } from '@mui/material'
-
 import CustomDrawer from '../CustomDrawer'
+import { useIvrContext } from '../ivr/IvrContext';
 
 // Modify the props to control the drawer from the parent component
-export default function MenuForm({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function MenuForm({ open, onClose,nodeId }: { open: boolean; onClose: () => void,nodeId:string }) {
   const [snackOpen, setSnackOpen] = useState(false)
+  const { dispatch } = useIvrContext()
+
+  // State to handle form inputs
+  const [formValues, setFormValues] = useState({
+    ivrName: '',
+    greetLong: 'none',
+    timeout: '',
+    maxAttempt: '',
+    visitLimit: '',
+    invalidSound: 'none',
+    timeoutSound: 'none',
+    inputLimitSound: 'none',
+  })
+
+  // Handle input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormValues({ ...formValues, [name]: value })
+  }
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('Form Submitted')
+    // Dispatching to context
+    dispatch({
+      type: 'setIvrData',
+      payload: {
+        nodeId:nodeId,
+        formValues
+      },
+    })
+    console.log('Form Data:', formValues)
     setSnackOpen(true) // Open the Snackbar on form submission
     onClose() // Close the drawer after submission
   }
@@ -43,13 +70,21 @@ export default function MenuForm({ open, onClose }: { open: boolean; onClose: ()
           {/* Ivr Menu Name Input */}
           <FormControl fullWidth variant='outlined' sx={{ mb: 2 }}>
             <FormLabel>Ivr Menu Name</FormLabel>
-            <TextField fullWidth label='Enter Name' variant='outlined' required />
+            <TextField
+              fullWidth
+              label='Enter Name'
+              variant='outlined'
+              required
+              name='ivrName'
+              value={formValues.ivrName}
+              onChange={handleChange}
+            />
           </FormControl>
 
           {/* Greet Long Radio Group */}
           <FormControl component='fieldset' sx={{ mb: 2 }}>
             <FormLabel>Greet Long</FormLabel>
-            <RadioGroup name='greet-long' defaultValue='none'>
+            <RadioGroup name='greetLong' value={formValues.greetLong} onChange={handleChange}>
               <FormControlLabel value='none' control={<Radio />} label='None' />
               <FormControlLabel value='existing' control={<Radio />} label='Choose Existing' />
             </RadioGroup>
@@ -60,19 +95,43 @@ export default function MenuForm({ open, onClose }: { open: boolean; onClose: ()
             <Grid item xs={6}>
               <FormControl fullWidth variant='outlined'>
                 <FormLabel>Timeout (ms)</FormLabel>
-                <TextField fullWidth label='Enter Timeout' variant='outlined' required />
+                <TextField
+                  fullWidth
+                  label='Enter Timeout'
+                  variant='outlined'
+                  required
+                  name='timeout'
+                  value={formValues.timeout}
+                  onChange={handleChange}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth variant='outlined'>
                 <FormLabel>Max. Attempt</FormLabel>
-                <TextField fullWidth label='Enter Attempts' variant='outlined' required />
+                <TextField
+                  fullWidth
+                  label='Enter Attempts'
+                  variant='outlined'
+                  required
+                  name='maxAttempt'
+                  value={formValues.maxAttempt}
+                  onChange={handleChange}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth variant='outlined'>
                 <FormLabel>VISIT Limit</FormLabel>
-                <TextField fullWidth label='Enter Limit' variant='outlined' required />
+                <TextField
+                  fullWidth
+                  label='Enter Limit'
+                  variant='outlined'
+                  required
+                  name='visitLimit'
+                  value={formValues.visitLimit}
+                  onChange={handleChange}
+                />
               </FormControl>
             </Grid>
           </Grid>
@@ -80,7 +139,7 @@ export default function MenuForm({ open, onClose }: { open: boolean; onClose: ()
           {/* Invalid Sound Radio Group */}
           <FormControl component='fieldset' sx={{ mb: 2, mt: 4 }}>
             <FormLabel>Invalid Sound</FormLabel>
-            <RadioGroup name='invalid-sound' defaultValue='none'>
+            <RadioGroup name='invalidSound' value={formValues.invalidSound} onChange={handleChange}>
               <FormControlLabel value='none' control={<Radio />} label='None' />
               <FormControlLabel value='existing' control={<Radio />} label='Choose Existing' />
             </RadioGroup>
@@ -89,7 +148,7 @@ export default function MenuForm({ open, onClose }: { open: boolean; onClose: ()
           {/* Timeout Sound Radio Group */}
           <FormControl component='fieldset' sx={{ mb: 2, mt: 4 }}>
             <FormLabel>Timeout Sound</FormLabel>
-            <RadioGroup name='timeout-sound' defaultValue='none'>
+            <RadioGroup name='timeoutSound' value={formValues.timeoutSound} onChange={handleChange}>
               <FormControlLabel value='none' control={<Radio />} label='None' />
               <FormControlLabel value='existing' control={<Radio />} label='Choose Existing' />
             </RadioGroup>
@@ -98,7 +157,11 @@ export default function MenuForm({ open, onClose }: { open: boolean; onClose: ()
           {/* Input Limit Reached Sound Radio Group */}
           <FormControl component='fieldset'>
             <FormLabel>Input Limit Reached Sound</FormLabel>
-            <RadioGroup name='input-limit-sound' defaultValue='none'>
+            <RadioGroup
+              name='inputLimitSound'
+              value={formValues.inputLimitSound}
+              onChange={handleChange}
+            >
               <FormControlLabel value='none' control={<Radio />} label='None' />
               <FormControlLabel value='existing' control={<Radio />} label='Choose Existing' />
             </RadioGroup>
@@ -113,7 +176,7 @@ export default function MenuForm({ open, onClose }: { open: boolean; onClose: ()
             sx={{
               mt: 2,
               backgroundColor: '#3f51b5',
-              '&:hover': { backgroundColor: '#303f9f' }
+              '&:hover': { backgroundColor: '#303f9f' },
             }}
           >
             Submit

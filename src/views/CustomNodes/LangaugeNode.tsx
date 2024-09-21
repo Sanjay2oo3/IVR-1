@@ -2,7 +2,6 @@
 
 import { Handle, Position } from '@xyflow/react'
 import { useState } from 'react'
-import MenuForm from '../MenuNode/MenuFrom'
 
 const handleStyle = {
   width: 12,
@@ -12,9 +11,9 @@ const handleStyle = {
   border: '2px solid black'
 }
 
-export default function MenuNode({ data }: any) {
+export default function LangaugeNode({ data }: any) {
   const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
-  console.log("Data",data);
+
   // Function to toggle drawer open state
   const handleOpenDrawer = () => {
     setOpenDrawer(true)
@@ -51,11 +50,11 @@ export default function MenuNode({ data }: any) {
         type='source'
         position={Position.Right}
         id='start'
-        style={{ ...handleStyle, backgroundColor: 'yellow' }}
+        style={{ ...handleStyle, backgroundColor: 'red' }}
       />
 
       {/* Render the MenuFormDrawer and pass the open state */}
-      <MenuForm open={openDrawer} onClose={() => setOpenDrawer(false)} nodeId={data.id} />
+      {/* <MenuForm open={openDrawer} onClose={() => setOpenDrawer(false)} /> */}
     </div>
   )
 }
