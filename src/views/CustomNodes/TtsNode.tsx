@@ -1,6 +1,6 @@
 'use client'
 
-import { Handle, Position } from '@xyflow/react'
+import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { useState } from 'react'
 
 const handleStyle = {
@@ -11,33 +11,75 @@ const handleStyle = {
   border: '2px solid black'
 }
 
-export default function TtsNode({ data }: any) {
+export default function ApiNode({ data }: any) {
   const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
+  const reactFlowInstance = useReactFlow() // Access the React Flow instance
 
-  // Function to toggle drawer open state
-  const handleOpenDrawer = () => {
-    setOpenDrawer(true)
+  // Function to delete the node
+  const handleDeleteNode = () => {
+    reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }) // Deletes node by its ID
   }
-
   return (
-    <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
-      <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
-        <img src='/images/custom/tts.png' alt='TTS' style={{ width: '80px', height: '80px' }} />
-        {/* Click here to open form */}
+    <div
+      style={{
+        position: 'relative', // To position handles relative to the image
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      {/* Close (Delete) Button */}
+      <div
+        onClick={handleDeleteNode}
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          cursor: 'pointer',
+          backgroundColor: 'red',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          borderRadius: '50%'
+        }}
+      >
+        X
+      </div>
+      <div>
+        <img src='/images/custom/tts.png' alt='API' style={{ width: '80px', height: '80px' }} />
       </div>
 
       {/* Add connection points (Handles) for the Menu node */}
-      <Handle type='source' position={Position.Left} id='error' style={{ ...handleStyle, backgroundColor: 'red' }} />
+      <Handle
+        type='target'
+        position={Position.Left}
+        id='hangupLeft'
+        style={{
+          ...handleStyle,
+          left: '-6px', // Slightly outside the left edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: '#F4DAB3'
+          // Adjust for centering
+        }}
+      />
 
+      {/* Right connection point (source) */}
       <Handle
         type='source'
         position={Position.Right}
-        id='visit-limit'
-        style={{ ...handleStyle, backgroundColor: 'green', top: '20%' }}
+        id='hangupRight'
+        style={{
+          ...handleStyle,
+          right: '-6px', // Slightly outside the right edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: 'green' // Adjust for centering
+        }}
       />
-
-      {/* Render the MenuFormDrawer and pass the open state */}
-      {/* <MenuForm open={openDrawer} onClose={() => setOpenDrawer(false)} /> */}
     </div>
   )
 }

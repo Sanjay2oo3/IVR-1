@@ -1,6 +1,6 @@
 'use client'
 
-import { Handle, Position } from '@xyflow/react'
+import { Handle, Position, useReactFlow } from '@xyflow/react'
 import { useIvrContext } from '../ivr/IvrContext'
 
 const handleStyle = {
@@ -14,6 +14,12 @@ const handleStyle = {
 
 export default function HangupNode({ data }: any) {
   const { IvrData } = useIvrContext()
+  const reactFlowInstance = useReactFlow() // Access the React Flow instance
+
+  // Function to delete the node
+  const handleDeleteNode = () => {
+    reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }) // Deletes node by its ID
+  }
 
   return (
     <div
@@ -24,6 +30,26 @@ export default function HangupNode({ data }: any) {
         alignItems: 'center'
       }}
     >
+      {/* Close (Delete) Button */}
+      <div
+        onClick={handleDeleteNode}
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          cursor: 'pointer',
+          backgroundColor: 'red',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          borderRadius: '50%'
+        }}
+      >
+        X
+      </div>
       {/* Image */}
       <img
         src='/images/custom/call_hangup.png'

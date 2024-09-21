@@ -27,7 +27,14 @@ export default function MenuNode({ data }: any) {
   }
 
   return (
-    <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
+    <div
+      style={{
+        position: 'relative', // To position handles relative to the image
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
       {/* Close (Delete) Button */}
       <div
         onClick={handleDeleteNode}
@@ -55,29 +62,33 @@ export default function MenuNode({ data }: any) {
 
       {/* Add connection points (Handles) for the Menu node */}
       <Handle type='source' position={Position.Left} id='error' style={{ ...handleStyle, backgroundColor: 'red' }} />
+      {/* Left connection point (target) */}
       <Handle
         type='target'
-        position={Position.Bottom}
-        id='timeout'
-        style={{ ...handleStyle, backgroundColor: 'pink', left: '40%' }}
+        position={Position.Left}
+        id='hangupLeft'
+        style={{
+          ...handleStyle,
+          left: '-6px', // Slightly outside the left edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: '#F4DAB3'
+          // Adjust for centering
+        }}
       />
-      <Handle
-        type='source'
-        position={Position.Bottom}
-        id='invalid'
-        style={{ ...handleStyle, backgroundColor: 'blue', left: '70%' }}
-      />
-      <Handle
-        type='source'
-        position={Position.Right}
-        id='visit-limit'
-        style={{ ...handleStyle, backgroundColor: 'green', top: '20%' }}
-      />
+
+      {/* Right connection point (source) */}
       <Handle
         type='source'
         position={Position.Right}
-        id='start'
-        style={{ ...handleStyle, backgroundColor: 'yellow' }}
+        id='hangupRight'
+        style={{
+          ...handleStyle,
+          right: '-6px', // Slightly outside the right edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: 'green' // Adjust for centering
+        }}
       />
 
       {/* Render the MenuFormDrawer and pass the open state */}

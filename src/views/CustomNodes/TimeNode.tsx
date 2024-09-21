@@ -1,8 +1,7 @@
-// components/TimeNode.tsx
 'use client'
 
 import { useState } from 'react'
-import { Handle, Position } from '@xyflow/react'
+import { Handle, Position, useReactFlow } from '@xyflow/react'
 import TimeForm from '../TimeNode/TimeForm'
 
 const handleStyle = {
@@ -14,39 +13,81 @@ const handleStyle = {
 }
 
 export default function TimeNode({ data }: any) {
-  const [formOpen, setFormOpen] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
+   const reactFlowInstance = useReactFlow() // Access the React Flow instance
 
-  const toggleForm = () => {
-    setFormOpen(!formOpen)
+   // Function to delete the node
+   const handleDeleteNode = () => {
+     reactFlowInstance.deleteElements({ nodes: [{ id: data.id }] }) // Deletes node by its ID
+   }
+
+  const handleOpenDrawer = () => {
+    setOpenDrawer(true)
   }
 
   return (
     <div
       style={{
-        position: 'relative',
-        width: '100px',
-        height: '100px',
-        padding: '10px',
-        cursor: 'pointer' // Change cursor to pointer on hover
+        position: 'relative', // To position handles relative to the image
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
       }}
-      onClick={toggleForm} // Toggle form open/close on click
     >
-      <div>
+      {/* Close (Delete) Button */}
+      <div
+        onClick={handleDeleteNode}
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          cursor: 'pointer',
+          backgroundColor: 'red',
+          width: '20px',
+          height: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          borderRadius: '50%'
+        }}
+      >
+        X
+      </div>
+      <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
         <img src='/images/custom/time_condition.png' alt='Time' style={{ width: '80px', height: '80px' }} />
       </div>
 
-      {/* Connection points */}
-      <Handle type='target' position={Position.Left} id='error' style={{ ...handleStyle, backgroundColor: 'red' }} />
+      {/* Add connection points (Handles) for the Menu node */}
       <Handle
         type='target'
-        position={Position.Bottom}
-        id='timeout'
-        style={{ ...handleStyle, backgroundColor: 'pink' }}
+        position={Position.Left}
+        id='hangupLeft'
+        style={{
+          ...handleStyle,
+          left: '-6px', // Slightly outside the left edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: '#F4DAB3'
+          // Adjust for centering
+        }}
       />
-      <Handle type='source' position={Position.Right} id='start' style={{ ...handleStyle, backgroundColor: 'green' }} />
 
+      {/* Right connection point (source) */}
+      <Handle
+        type='source'
+        position={Position.Right}
+        id='hangupRight'
+        style={{
+          ...handleStyle,
+          right: '-6px', // Slightly outside the right edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: 'green' // Adjust for centering
+        }}
+      />
       {/* Render TimeForm inside TimeNode when formOpen is true */}
-      {formOpen && <TimeForm />}
+      <TimeForm open={openDrawer} onClose={() => setOpenDrawer(false)} nodeId={data.id} />
     </div>
-  ) 
+  )
 }
