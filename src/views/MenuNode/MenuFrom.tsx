@@ -10,9 +10,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Grid,
-  Divider,
-  Snackbar,
-  Alert
+  Divider
 } from '@mui/material'
 import CustomDrawer from '../CustomDrawer'
 import { useIvrContext } from '../ivr/IvrContext';
@@ -52,14 +50,10 @@ export default function MenuForm({ open, onClose, nodeId }: { open: boolean; onC
       },
     })
     console.log('Form Data:', formValues)
-    setSnackOpen(true) // Open the Snackbar on form submission
     onClose() // Close the drawer after submission
   }
 
-  // Handle Snackbar close
-  const handleSnackClose = () => {
-    setSnackOpen(false)
-  }
+
 
   return (
     <>
@@ -184,17 +178,7 @@ export default function MenuForm({ open, onClose, nodeId }: { open: boolean; onC
         </form>
       </CustomDrawer>
 
-      {/* Snackbar for success message */}
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert onClose={handleSnackClose} severity='success' sx={{ width: '100%' }}>
-          Form submitted successfully!
-        </Alert>
-      </Snackbar>
+      
     </>
   )
 }

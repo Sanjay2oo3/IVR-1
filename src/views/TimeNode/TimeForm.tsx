@@ -3,17 +3,25 @@
 import { useState } from 'react'
 import { Button, FormControl, FormLabel, TextField, Divider, Snackbar, Alert } from '@mui/material'
 import CustomDrawer from '../CustomDrawer'
+import { useIvrContext } from '../ivr/IvrContext'
 
 export default function TimeForm({ open, onClose, nodeId }: { open: boolean; onClose: () => void; nodeId: string }) {
   const [formValues, setFormValues] = useState({
     name: ''
   })
   const [error, setError] = useState(false)
-  const [snackOpen, setSnackOpen] = useState(false) // Snackbar state
+  const { dispatch } = useIvrContext()
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+     dispatch({
+       type: 'setIvrData',
+       payload: {
+         nodeId: nodeId,
+         formValues
+       }
+     })
 
     if (formValues.name.length < 1 || formValues.name.length > 100) {
       setError(true)
