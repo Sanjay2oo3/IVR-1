@@ -4,25 +4,64 @@ import { Handle, Position } from '@xyflow/react'
 import { useIvrContext } from '../ivr/IvrContext'
 
 const handleStyle = {
-  width: 12,
-  height: 12,
-  borderRadius: '50%',
-  backgroundColor: '#555',
-  border: '2px solid black'
+  width: 12, // Handle size
+  height: 12, // Handle size
+  borderRadius: '50%', // Circular shape for the dots
+  backgroundColor: '#4CAF50', // Green color for the handles
+  border: '2px solid #000', // Dark border for visibility
+  boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)' // Optional shadow for effect
 }
 
 export default function HangupNode({ data }: any) {
-  const { IvrData, dispatch } = useIvrContext()
-  console.log('Hangupnode', IvrData)
-  //dispatch({ type: 'setIvrName', payload: 'ab' })
-  return (
-    <div style={{ position: 'relative', width: '100px', height: '100px', padding: '10px' }}>
-      <div>
-        <img src='images/custom/call_hangup.png' alt='HangUp' style={{ width: '80px', height: '80px' }} />
-      </div>
+  const { IvrData } = useIvrContext()
 
-      {/* Add connection points (Handles) for the Menu node */}
-      <Handle type='target' position={Position.Left} id='error' style={{ ...handleStyle, backgroundColor: 'red' }} />
+  return (
+    <div
+      style={{
+        position: 'relative', // To position handles relative to the image
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      {/* Image */}
+      <img
+        src='/images/custom/call_hangup.png'
+        alt='HangUp'
+        style={{
+          width: '80px', // Set width of the image
+          height: '80px' // Set height of the image
+        }}
+      />
+
+      {/* Left connection point (target) */}
+      <Handle
+        type='target'
+        position={Position.Left}
+        id='hangupLeft'
+        style={{
+          ...handleStyle,
+          left: '-6px', // Slightly outside the left edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: '#F4DAB3'
+          // Adjust for centering
+        }}
+      />
+
+      {/* Right connection point (source) */}
+      <Handle
+        type='source'
+        position={Position.Right}
+        id='hangupRight'
+        style={{
+          ...handleStyle,
+          right: '-6px', // Slightly outside the right edge
+          top: '50%', // Centered vertically
+          transform: 'translateY(-50%)',
+          backgroundColor: 'green' // Adjust for centering
+        }}
+      />
     </div>
   )
 }

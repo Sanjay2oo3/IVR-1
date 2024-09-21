@@ -1,59 +1,63 @@
-// components/QueueFormDrawer.tsx
+// components/QueueForm.tsx
 'use client'
 
 import { useState } from 'react'
-import { Button, FormControl, FormLabel, TextField, Select, MenuItem, Divider, Snackbar, Alert } from '@mui/material'
+import { Button, FormControl, FormLabel, TextField, Select, MenuItem, Divider } from '@mui/material'
 import CustomDrawer from '../CustomDrawer'
 
-export default function QueueForm({ onOpen }: { onOpen: () => void }) {
-  const [queueName, setQueueName] = useState('')
-  const [selectedQueue, setSelectedQueue] = useState('')
-  const [error, setError] = useState(false)
-  const [snackOpen, setSnackOpen] = useState(false)
+export default function QueueForm({ open, onClose, nodeId }: { open: boolean; onClose: () => void; nodeId: string }) {
+  const [formValues, setFormValues] = useState({
+    queueName: '',
+    selectedQueue: ''
+  })
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (queueName.length < 1 || queueName.length > 100) {
-      setError(true)
-    } else {
-      console.log('Queue Form Submitted:', queueName, selectedQueue)
-      onOpen() // Close the form and reset
-      setSnackOpen(true)
-      setQueueName('')
-      setSelectedQueue('')
-      setError(false)
-    }
+
+    console.log('Form Submitted with values:', formValues, 'for Node ID:', nodeId)
+
+    // Reset form values (optional)
+    setFormValues({
+      queueName: '',
+      selectedQueue: ''
+    })
+
+    // Close the drawer after submission
+    onClose()
   }
 
-  const handleSnackClose = () => {
-    setSnackOpen(false)
+  // Handle input change for TextField and Select components
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { value: unknown }>) => {
+    const { name, value } = e.target as HTMLInputElement
+    setFormValues({ ...formValues, [name]: value })
   }
 
   return (
     <div>
-      <CustomDrawer open={true} onClose={onOpen} title='Queue Properties'>
+      <CustomDrawer open={open} onClose={onClose} title='Queue Properties'>
         <form onSubmit={handleSubmit}>
           <Divider sx={{ mb: 3 }} />
 
           {/* Queue Name Input */}
-          <FormControl fullWidth variant='outlined' sx={{ mb: 2 }} error={error}>
+          <FormControl fullWidth variant='outlined' sx={{ mb: 2 }}>
             <FormLabel>Queue Name</FormLabel>
             <TextField
               fullWidth
               label='Enter Queue Name'
               variant='outlined'
               required
-              value={queueName}
-              onChange={e => setQueueName(e.target.value)}
+              name='queueName'
+              value={formValues.queueName}
+              onChange={handleChange}
               inputProps={{ min: 1, max: 100 }}
             />
-            {error && <span style={{ color: 'red' }}>Queue name must be between 1 and 100 characters.</span>}
           </FormControl>
 
           {/* Dropdown List */}
           <FormControl fullWidth variant='outlined' sx={{ mb: 2 }}>
             <FormLabel>Select Queue Option</FormLabel>
-            <Select value={selectedQueue} onChange={e => setSelectedQueue(e.target.value)} displayEmpty required>
+            <Select name='selectedQueue' value={formValues.selectedQueue} onChange={handleChange} displayEmpty required>
               <MenuItem value='' disabled>
                 Select an option
               </MenuItem>
@@ -63,6 +67,7 @@ export default function QueueForm({ onOpen }: { onOpen: () => void }) {
             </Select>
           </FormControl>
 
+          {/* Submit Button */}
           <Button
             type='submit'
             variant='contained'
@@ -77,18 +82,6 @@ export default function QueueForm({ onOpen }: { onOpen: () => void }) {
             Submit
           </Button>
         </form>
-
-        {/* Snackbar for success message */}
-        <Snackbar
-          open={snackOpen}
-          autoHideDuration={3000}
-          onClose={handleSnackClose}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-          <Alert onClose={handleSnackClose} severity='success' sx={{ width: '100%' }}>
-            Queue form submitted successfully!
-          </Alert>
-        </Snackbar>
       </CustomDrawer>
     </div>
   )

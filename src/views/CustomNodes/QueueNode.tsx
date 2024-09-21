@@ -14,10 +14,11 @@ const handleStyle = {
 }
 
 export default function QueueNode({ data }: any) {
-  const [formOpen, setFormOpen] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false) // State to toggle drawer
 
-  const toggleForm = () => {
-    setFormOpen(!formOpen)
+  // Function to toggle drawer open state
+  const handleOpenDrawer = () => {
+    setOpenDrawer(true)
   }
 
   return (
@@ -27,12 +28,14 @@ export default function QueueNode({ data }: any) {
         width: '100px',
         height: '100px',
         padding: '10px',
+        border: '1px solid #ccc',
+        borderRadius: '8px',
         cursor: 'pointer' // Change cursor to pointer on hover
       }}
-      onClick={toggleForm} // Toggle form open/close on click
     >
-      <div>
+      <div onClick={handleOpenDrawer} style={{ cursor: 'pointer' }}>
         <img src='/images/custom/Queue.png' alt='Queue' style={{ width: '80px', height: '80px' }} />
+        {/* Click here to open form */}
       </div>
 
       {/* Connection points */}
@@ -44,8 +47,8 @@ export default function QueueNode({ data }: any) {
       />
       <Handle type='source' position={Position.Right} id='queueRight' style={handleStyle} />
 
-      {/* Render QueueForm inside QueueNode when formOpen is true */}
-      {formOpen && <QueueForm onOpen={toggleForm} />}
+      {/* Render the QueueFormDrawer and pass the open state */}
+      <QueueForm open={openDrawer} onClose={() => setOpenDrawer(false)} nodeId={data.id} />
     </div>
   )
 }
